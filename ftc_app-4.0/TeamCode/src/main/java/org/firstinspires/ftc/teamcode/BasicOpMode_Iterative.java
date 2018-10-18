@@ -114,6 +114,29 @@ public class BasicOpMode_Iterative extends OpMode
         leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
         rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
 
+        // run until the end of the match (driver presses STOP)
+        double tgtPower = 0;
+        while (opModeIsActive()) {
+            tgtPower = -this.gamepad1.left_stick_y;
+            motorTest.setPower(tgtPower);
+            // check to see if we need to move the servo.
+            if (gamepad1.y) {
+                // move to
+                0 degrees.servoTest.setPosition(0);
+            } else if (gamepad1.x || gamepad1.b) {
+                // move to 90 degrees.
+                servoTest.setPosition(0.5);
+            } else if (gamepad1.a) {
+                // move to 180 degrees.
+                servoTest.setPosition(1);
+            }
+            telemetry.addData("Servo Position", servoTest.getPosition());
+            telemetry.addData("Target Power", tgtPower);
+            telemetry.addData("Motor Power", motorTest.getPower());
+            telemetry.addData("Status", "Running");
+            telemetry.update();
+        }
+
         // Tank Mode uses one stick to control each wheel.
         // - This requires no math, but it is hard to drive forward slowly and keep straight.
         // leftPower  = -gamepad1.left_stick_y ;
