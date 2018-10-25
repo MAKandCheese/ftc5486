@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -57,6 +58,7 @@ public class BasicOpMode_Iterative extends OpMode
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor leftDrive = null;
     private DcMotor rightDrive = null;
+    private Servo claw = null;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -78,6 +80,9 @@ public class BasicOpMode_Iterative extends OpMode
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
+
+        //initialize claw from the hardware map
+        claw = hardwareMap.servo.get(“claw”);
     }
 
     /*
@@ -115,13 +120,23 @@ public class BasicOpMode_Iterative extends OpMode
         rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
 
         // run until the end of the match (driver presses STOP)
+
         double tgtPower = 0;
+
         while (opModeIsActive()) {
+
+            if (gamepad1.a) {
+                claw.setPosition(0);
+            }
+            else {
+                claw.setPosition(1);
+            }
+
             tgtPower = -this.gamepad1.left_stick_y;
             motorTest.setPower(tgtPower);
             // check to see if we need to move the servo.
             if (gamepad1.y) {
-                // move to
+                // move to 0 degrees
                 0 degrees.servoTest.setPosition(0);
             } else if (gamepad1.x || gamepad1.b) {
                 // move to 90 degrees.
