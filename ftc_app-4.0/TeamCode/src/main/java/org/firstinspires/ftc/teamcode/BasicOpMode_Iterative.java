@@ -60,6 +60,14 @@ public class BasicOpMode_Iterative extends OpMode
     private DcMotor rightDrive = null;
     private Servo claw = null;
 
+    private Servo joint1 = null;
+    private Servo joint2 = null;
+    private Servo joint3 = null;
+    private double j1pos = 0;
+    private double j2pos = 0;
+    private double j3pos = 0;
+
+
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -82,7 +90,12 @@ public class BasicOpMode_Iterative extends OpMode
         telemetry.addData("Status", "Initialized");
 
         //initialize claw from the hardware map
-        claw = hardwareMap.servo.get(“claw”);
+        claw = hardwareMap.servo.get("claw");
+
+        joint1 = hardwareMap.servo.get("joint1");
+        joint2 = hardwareMap.servo.get("joint2");
+        joint3 = hardwareMap.servo.get("joint3");
+
     }
 
     /*
@@ -90,6 +103,11 @@ public class BasicOpMode_Iterative extends OpMode
      */
     @Override
     public void init_loop() {
+        //servo init to halfway
+        joint1.setPosition(0.5);
+        joint2.setPosition(0.5);
+        joint3.setPosition(0.5);
+
     }
 
     /*
@@ -121,7 +139,7 @@ public class BasicOpMode_Iterative extends OpMode
 
         // run until the end of the match (driver presses STOP)
 
-        double tgtPower = 0;
+        /*double tgtPower = 0;
 
         while (opModeIsActive()) {
 
@@ -150,7 +168,7 @@ public class BasicOpMode_Iterative extends OpMode
             telemetry.addData("Motor Power", motorTest.getPower());
             telemetry.addData("Status", "Running");
             telemetry.update();
-        }
+        }*/
 
         // Tank Mode uses one stick to control each wheel.
         // - This requires no math, but it is hard to drive forward slowly and keep straight.
@@ -164,6 +182,39 @@ public class BasicOpMode_Iterative extends OpMode
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
+
+        //joint1
+        if(gamepad2.dpad_up)
+        {   if(j1pos < 1)
+            j1pos+= .05;
+        }
+        if(gamepad2.dpad_down)
+        {   if(j1pos > 0)
+            j1pos-= .05;
+        }
+
+        joint1.setPosition(j1pos);
+
+        //joint2
+        if(gamepad2.dpad_right)
+        {   if(j2pos < 1)
+            j2pos+= .05;
+        }
+        if(gamepad2.dpad_left)
+        {   if(j2pos > 0)
+            j2pos-= .05;
+        }
+
+        //joint3
+        if(gamepad2.a)
+        {   if(j3pos < 1)
+            j3pos+= .05;
+        }
+        if(gamepad2.y)
+        {   if(j3pos > 0)
+            j3pos-= .05;
+        }
+
     }
 
     /*
