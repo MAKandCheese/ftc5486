@@ -163,6 +163,7 @@ public class BasicOpMode_Iterative extends OpMode
         }
 
         joint1.setPosition(j1pos);
+        telemetry.addData("joint 1", joint1.getPosition());
 
         //joint2
         if(gamepad1.dpad_right)
@@ -174,6 +175,9 @@ public class BasicOpMode_Iterative extends OpMode
             j2pos-= .05;
         }
 
+        joint2.setPosition(j2pos);
+        telemetry.addData("joint 2", joint2.getPosition());
+
         //joint3
         if(gamepad1.a)
         {   if(j3pos < 1)
@@ -184,6 +188,8 @@ public class BasicOpMode_Iterative extends OpMode
             j3pos-= .05;
         }
 
+        joint3.setPosition(j3pos);
+        telemetry.addData("joint 3", joint3.getPosition());
     }
 
     /*
