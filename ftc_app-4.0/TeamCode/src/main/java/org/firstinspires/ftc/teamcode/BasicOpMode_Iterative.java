@@ -90,7 +90,7 @@ public class BasicOpMode_Iterative extends OpMode
         telemetry.addData("Status", "Initialized");
 
         //initialize claw from the hardware map
-        claw = hardwareMap.servo.get("claw");
+        //claw = hardwareMap.servo.get("claw");
 
         joint1 = hardwareMap.servo.get("joint1");
         joint2 = hardwareMap.servo.get("joint2");
@@ -134,41 +134,10 @@ public class BasicOpMode_Iterative extends OpMode
         // - This uses basic math to combine motions and is easier to drive straight.
         double drive = -gamepad1.left_stick_y;
         double turn  =  gamepad1.right_stick_x;
-        leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
-        rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
+        leftPower = Range.clip(drive + turn, -1.0, 1.0) ;
+        rightPower = Range.clip(drive - turn, -1.0, 1.0) ;
 
         // run until the end of the match (driver presses STOP)
-
-        /*double tgtPower = 0;
-
-        while (opModeIsActive()) {
-
-            if (gamepad1.a) {
-                claw.setPosition(0);
-            }
-            else {
-                claw.setPosition(1);
-            }
-
-            tgtPower = -this.gamepad1.left_stick_y;
-            motorTest.setPower(tgtPower);
-            // check to see if we need to move the servo.
-            if (gamepad1.y) {
-                // move to 0 degrees
-                0 degrees.servoTest.setPosition(0);
-            } else if (gamepad1.x || gamepad1.b) {
-                // move to 90 degrees.
-                servoTest.setPosition(0.5);
-            } else if (gamepad1.a) {
-                // move to 180 degrees.
-                servoTest.setPosition(1);
-            }
-            telemetry.addData("Servo Position", servoTest.getPosition());
-            telemetry.addData("Target Power", tgtPower);
-            telemetry.addData("Motor Power", motorTest.getPower());
-            telemetry.addData("Status", "Running");
-            telemetry.update();
-        }*/
 
         // Tank Mode uses one stick to control each wheel.
         // - This requires no math, but it is hard to drive forward slowly and keep straight.
@@ -184,11 +153,11 @@ public class BasicOpMode_Iterative extends OpMode
         telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
 
         //joint1
-        if(gamepad2.dpad_up)
+        if(gamepad1.dpad_up)
         {   if(j1pos < 1)
             j1pos+= .05;
         }
-        if(gamepad2.dpad_down)
+        if(gamepad1.dpad_down)
         {   if(j1pos > 0)
             j1pos-= .05;
         }
@@ -196,21 +165,21 @@ public class BasicOpMode_Iterative extends OpMode
         joint1.setPosition(j1pos);
 
         //joint2
-        if(gamepad2.dpad_right)
+        if(gamepad1.dpad_right)
         {   if(j2pos < 1)
             j2pos+= .05;
         }
-        if(gamepad2.dpad_left)
+        if(gamepad1.dpad_left)
         {   if(j2pos > 0)
             j2pos-= .05;
         }
 
         //joint3
-        if(gamepad2.a)
+        if(gamepad1.a)
         {   if(j3pos < 1)
             j3pos+= .05;
         }
-        if(gamepad2.y)
+        if(gamepad1.y)
         {   if(j3pos > 0)
             j3pos-= .05;
         }
