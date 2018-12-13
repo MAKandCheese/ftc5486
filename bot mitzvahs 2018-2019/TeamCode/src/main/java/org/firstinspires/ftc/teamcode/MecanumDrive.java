@@ -27,7 +27,7 @@ public class MecanumDrive extends OpMode {
 
         frontleft.setPower(v1);
         frontRight.setPower(v2);
-        backLeft.setPower(v3)
+        backLeft.setPower(v3);
         backRight.setPower(v4);
     }
 }
