@@ -13,6 +13,9 @@ public class MecanumDrive extends OpMode {
     public void init() {
         telemetry.addData("Starting up Mecanum Drive", "intializing");
         frontleft = hardwareMap.get(DcMotor.class, "front left");
+        backLeft = hardwareMap.get(DcMotor.class, "back left");
+        frontRight = hardwareMap.get(DcMotor.class, "front right");
+        backRight = hardwareMap.get(DcMotor.class, "back right");
     }
 
     @Override
