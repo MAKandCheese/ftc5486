@@ -20,17 +20,14 @@ public class MecanumDrive extends OpMode {
 
     @Override
     public void loop() {
-        double r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
-        double robotAngle = Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4;
-        double rightX = gamepad1.right_stick_x;
-        final double v1 = r * Math.cos(robotAngle) + rightX;
-        final double v2 = r * Math.sin(robotAngle) - rightX;
-        final double v3 = r * Math.sin(robotAngle) + rightX;
-        final double v4 = r * Math.cos(robotAngle) - rightX;
 
-        frontleft.setPower(v1);
-        frontRight.setPower(v2);
-        backLeft.setPower(v3);
-        backRight.setPower(v4);
+        double Vd = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y);
+        double thetad = Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x);
+        double Vtheta = gamepad1.right_stick_x;
+
+        frontleft.setPower(Vd * Math.sin(thetad + Math.PI / 4.0) + Vtheta);
+        frontRight.setPower(Vd * Math.cos(thetad + Math.PI / 4.0) - Vtheta);
+        backLeft.setPower(Vd + Math.cos(thetad + Math.PI / 4.0) + Vtheta);
+        backRight.setPower(Vd + Math.sin(thetad + Math.PI / 4.0) - Vtheta );
     }
 }
