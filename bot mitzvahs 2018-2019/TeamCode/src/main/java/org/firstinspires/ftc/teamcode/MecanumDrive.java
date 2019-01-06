@@ -27,7 +27,7 @@ public class MecanumDrive extends OpMode {
 
         frontleft.setPower(Vd * Math.sin(thetad + Math.PI / 4.0) + Vtheta);
         frontRight.setPower(Vd * Math.cos(thetad + Math.PI / 4.0) - Vtheta);
-        backLeft.setPower(Vd + Math.cos(thetad + Math.PI / 4.0) + Vtheta);
-        backRight.setPower(Vd + Math.sin(thetad + Math.PI / 4.0) - Vtheta );
+        backLeft.setPower(-1*(Vd * Math.cos(thetad + Math.PI / 4.0) + Vtheta));
+        backRight.setPower(-1*(Vd * Math.sin(thetad + Math.PI / 4.0) - Vtheta ));
     }
 }
