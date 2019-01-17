@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 @TeleOp
 public class MecanumDrive extends OpMode {
 
-    private DcMotor frontleft, backLeft, frontRight, backRight;
+    private DcMotor frontleft, backLeft, frontRight, backRight, arm;
 
     @Override
     public void init() {
@@ -16,6 +16,7 @@ public class MecanumDrive extends OpMode {
         backLeft = hardwareMap.get(DcMotor.class, "back left");
         frontRight = hardwareMap.get(DcMotor.class, "front right");
         backRight = hardwareMap.get(DcMotor.class, "back right");
+        arm = hardwareMap.get(DcMotor.class, "arm");
     }
 
     @Override
@@ -29,5 +30,13 @@ public class MecanumDrive extends OpMode {
         frontRight.setPower(Vd * Math.cos(thetad + Math.PI / 4.0) - Vtheta);
         backLeft.setPower(-1*(Vd * Math.cos(thetad + Math.PI / 4.0) + Vtheta));
         backRight.setPower(-1*(Vd * Math.sin(thetad + Math.PI / 4.0) - Vtheta ));
+
+        if(gamepad1.dpad_up) {
+            arm.setPower(0.5);
+        } else if (gamepad1.dpad_down) {
+            arm.setPower(-0.5);
+        } else {
+            arm.setPower(0);
+        }
     }
 }
